@@ -1,0 +1,356 @@
+lives
+------------------------------------------
+LiVES mixes realtime video performance and non-linear editing in one 
+application. It will let you start editing and making video right away, 
+without having to worry about formats, frame sizes, or framerates. It is 
+a very flexible tool which can be used by both VJ's and video editors - 
+mix and switch clips from the keyboard, trim and edit your clips, and 
+bring them together using the multitrack timeline.
+
+Runtime requirements:
+  cygwin-1.5.25-15
+  libdv4-1.0.0-1
+  libgdk_pixbuf2.0_0-2.14.6-1
+  libglib2.0_0-2.18.3-1
+  libgtk2.0_0-2.14.6-1
+  libintl8-0.17-2
+  libjack0-0.109.2-1
+  libmjpegtools19-1.9.0rc3-1
+  libogg0-1.1.3-1
+  liboil0.3_0-0.3.15-2
+  libSDL1.2_0-1.2.13-2
+  libtheora0-1.0-1
+  libvisual0.4_0-0.4.0-2
+  libvisual0.4-plugins-0.4.0-2
+  libX11_6-1.1.5-1
+  cdda2wav
+  cdrkit
+  ImageMagick
+  mjpegtools
+  mplayer
+  perl
+  python
+  sox
+  transcode
+
+Build requirements:
+(besides corresponding -devel packages)
+  autoconf2.5-2.63-1
+  automake1.10-1.10.1-2
+  binutils-20080624-2
+  cygport-0.4.3-1
+  gawk-3.1.6-1
+  gcc-core-3.4.4-3
+  gettext-devel-0.17-2
+  libtool-2.2.6a-1
+  make-3.81-1
+  pkg-config-0.23a-2
+  sed-4.1.5-2
+
+Canonical website:
+  http://lives.sourceforge.net/
+
+Canonical download:
+  http://www.xs4all.nl/~salsaman/lives/
+
+-------------------------------------------
+
+Build instructions:
+  unpack lives-0.9.9.4-X-src.tar.bz2
+    if you use setup to install this src package, it will be
+	 unpacked under /usr/src automatically
+  cd /usr/src
+  cygport ./lives-0.9.9.4-X.cygport all
+
+This will create:
+  /usr/src/lives-0.9.9.4-X-src.tar.bz2
+  /usr/src/lives-0.9.9.4-X.tar.bz2
+
+-------------------------------------------
+
+Files included in the binary package:
+
+  /usr/bin/autolives.pl
+  /usr/bin/avi_encoder.py
+  /usr/bin/build-lives-rfx-plugin
+  /usr/bin/build-lives-rfx-plugin-multi
+  /usr/bin/dirac_encoder.py
+  /usr/bin/gif_encoder.py
+  /usr/bin/lives
+  /usr/bin/lives-exe.exe
+  /usr/bin/midistart
+  /usr/bin/midistop
+  /usr/bin/mkv_encoder.py
+  /usr/bin/mng_encoder.py
+  /usr/bin/mpeg_encoder.py
+  /usr/bin/ogm_encoder.py
+  /usr/bin/smogrify
+  /usr/bin/theora_encoder.py
+  /usr/include/weed/weed-effects.h
+  /usr/include/weed/weed-events.h
+  /usr/include/weed/weed-host.h
+  /usr/include/weed/weed-plugin-utils.h
+  /usr/include/weed/weed-plugin.h
+  /usr/include/weed/weed-utils.h
+  /usr/include/weed/weed.h
+  /usr/lib/lives/plugins/decoders/dv_decoder.dll
+  /usr/lib/lives/plugins/decoders/dv_decoder.la
+  /usr/lib/lives/plugins/decoders/ogg_theora_decoder.dll
+  /usr/lib/lives/plugins/decoders/ogg_theora_decoder.la
+  /usr/lib/lives/plugins/effects/realtime/weed/alien_overlay.dll
+  /usr/lib/lives/plugins/effects/realtime/weed/alien_overlay.la
+  /usr/lib/lives/plugins/effects/realtime/weed/audio_transition.dll
+  /usr/lib/lives/plugins/effects/realtime/weed/audio_transition.la
+  /usr/lib/lives/plugins/effects/realtime/weed/audio_volume.dll
+  /usr/lib/lives/plugins/effects/realtime/weed/audio_volume.la
+  /usr/lib/lives/plugins/effects/realtime/weed/blurzoom.dll
+  /usr/lib/lives/plugins/effects/realtime/weed/blurzoom.la
+  /usr/lib/lives/plugins/effects/realtime/weed/bump2d.dll
+  /usr/lib/lives/plugins/effects/realtime/weed/bump2d.la
+  /usr/lib/lives/plugins/effects/realtime/weed/ccorrect.dll
+  /usr/lib/lives/plugins/effects/realtime/weed/ccorrect.la
+  /usr/lib/lives/plugins/effects/realtime/weed/colorkey.dll
+  /usr/lib/lives/plugins/effects/realtime/weed/colorkey.la
+  /usr/lib/lives/plugins/effects/realtime/weed/compositor.dll
+  /usr/lib/lives/plugins/effects/realtime/weed/compositor.la
+  /usr/lib/lives/plugins/effects/realtime/weed/cygvis.dll
+  /usr/lib/lives/plugins/effects/realtime/weed/deinterlace.dll
+  /usr/lib/lives/plugins/effects/realtime/weed/deinterlace.la
+  /usr/lib/lives/plugins/effects/realtime/weed/edge.dll
+  /usr/lib/lives/plugins/effects/realtime/weed/edge.la
+  /usr/lib/lives/plugins/effects/realtime/weed/fg_bg_removal.dll
+  /usr/lib/lives/plugins/effects/realtime/weed/fg_bg_removal.la
+  /usr/lib/lives/plugins/effects/realtime/weed/fireTV.dll
+  /usr/lib/lives/plugins/effects/realtime/weed/fireTV.la
+  /usr/lib/lives/plugins/effects/realtime/weed/gdk_fast_resize.dll
+  /usr/lib/lives/plugins/effects/realtime/weed/gdk_fast_resize.la
+  /usr/lib/lives/plugins/effects/realtime/weed/haip.dll
+  /usr/lib/lives/plugins/effects/realtime/weed/haip.la
+  /usr/lib/lives/plugins/effects/realtime/weed/layout_blends.dll
+  /usr/lib/lives/plugins/effects/realtime/weed/layout_blends.la
+  /usr/lib/lives/plugins/effects/realtime/weed/libvis.la
+  /usr/lib/lives/plugins/effects/realtime/weed/lifeTV.dll
+  /usr/lib/lives/plugins/effects/realtime/weed/lifeTV.la
+  /usr/lib/lives/plugins/effects/realtime/weed/mirrors.dll
+  /usr/lib/lives/plugins/effects/realtime/weed/mirrors.la
+  /usr/lib/lives/plugins/effects/realtime/weed/multi_blends.dll
+  /usr/lib/lives/plugins/effects/realtime/weed/multi_blends.la
+  /usr/lib/lives/plugins/effects/realtime/weed/negate.dll
+  /usr/lib/lives/plugins/effects/realtime/weed/negate.la
+  /usr/lib/lives/plugins/effects/realtime/weed/noise.dll
+  /usr/lib/lives/plugins/effects/realtime/weed/noise.la
+  /usr/lib/lives/plugins/effects/realtime/weed/onedTV.dll
+  /usr/lib/lives/plugins/effects/realtime/weed/onedTV.la
+  /usr/lib/lives/plugins/effects/realtime/weed/palette_test.dll
+  /usr/lib/lives/plugins/effects/realtime/weed/palette_test.la
+  /usr/lib/lives/plugins/effects/realtime/weed/plasma.dll
+  /usr/lib/lives/plugins/effects/realtime/weed/plasma.la
+  /usr/lib/lives/plugins/effects/realtime/weed/posterise.dll
+  /usr/lib/lives/plugins/effects/realtime/weed/posterise.la
+  /usr/lib/lives/plugins/effects/realtime/weed/rippleTV.dll
+  /usr/lib/lives/plugins/effects/realtime/weed/rippleTV.la
+  /usr/lib/lives/plugins/effects/realtime/weed/rotozoom.dll
+  /usr/lib/lives/plugins/effects/realtime/weed/rotozoom.la
+  /usr/lib/lives/plugins/effects/realtime/weed/simple_blend.dll
+  /usr/lib/lives/plugins/effects/realtime/weed/simple_blend.la
+  /usr/lib/lives/plugins/effects/realtime/weed/slide_over.dll
+  /usr/lib/lives/plugins/effects/realtime/weed/slide_over.la
+  /usr/lib/lives/plugins/effects/realtime/weed/targeted_zoom.dll
+  /usr/lib/lives/plugins/effects/realtime/weed/targeted_zoom.la
+  /usr/lib/lives/plugins/effects/realtime/weed/textfun.dll
+  /usr/lib/lives/plugins/effects/realtime/weed/textfun.la
+  /usr/lib/lives/plugins/effects/realtime/weed/tvpic.dll
+  /usr/lib/lives/plugins/effects/realtime/weed/tvpic.la
+  /usr/lib/lives/plugins/effects/realtime/weed/vertigo.dll
+  /usr/lib/lives/plugins/effects/realtime/weed/vertigo.la
+  /usr/lib/lives/plugins/effects/realtime/weed/videowall.dll
+  /usr/lib/lives/plugins/effects/realtime/weed/videowall.la
+  /usr/lib/lives/plugins/effects/realtime/weed/warpTV.dll
+  /usr/lib/lives/plugins/effects/realtime/weed/warpTV.la
+  /usr/lib/lives/plugins/effects/realtime/weed/xeffect.dll
+  /usr/lib/lives/plugins/effects/realtime/weed/xeffect.la
+  /usr/lib/lives/plugins/effects/rendered/blank_frames
+  /usr/lib/lives/plugins/effects/rendered/blur
+  /usr/lib/lives/plugins/effects/rendered/brightness_change
+  /usr/lib/lives/plugins/effects/rendered/charcoal
+  /usr/lib/lives/plugins/effects/rendered/colorize
+  /usr/lib/lives/plugins/effects/rendered/colour_filter
+  /usr/lib/lives/plugins/effects/rendered/colour_replace
+  /usr/lib/lives/plugins/effects/rendered/contrast
+  /usr/lib/lives/plugins/effects/rendered/cycle
+  /usr/lib/lives/plugins/effects/rendered/deinterlace
+  /usr/lib/lives/plugins/effects/rendered/despeckle
+  /usr/lib/lives/plugins/effects/rendered/dream
+  /usr/lib/lives/plugins/effects/rendered/edge_detect
+  /usr/lib/lives/plugins/effects/rendered/emboss
+  /usr/lib/lives/plugins/effects/rendered/enhance
+  /usr/lib/lives/plugins/effects/rendered/flip
+  /usr/lib/lives/plugins/effects/rendered/flop
+  /usr/lib/lives/plugins/effects/rendered/frame_calculator
+  /usr/lib/lives/plugins/effects/rendered/gamma_change
+  /usr/lib/lives/plugins/effects/rendered/gen_blank_frames
+  /usr/lib/lives/plugins/effects/rendered/gen_clip_from_image
+  /usr/lib/lives/plugins/effects/rendered/gen_coloured_frames
+  /usr/lib/lives/plugins/effects/rendered/gen_text
+  /usr/lib/lives/plugins/effects/rendered/hue_change
+  /usr/lib/lives/plugins/effects/rendered/jumble
+  /usr/lib/lives/plugins/effects/rendered/modulate
+  /usr/lib/lives/plugins/effects/rendered/monochrome
+  /usr/lib/lives/plugins/effects/rendered/negate
+  /usr/lib/lives/plugins/effects/rendered/noisify
+  /usr/lib/lives/plugins/effects/rendered/normalize
+  /usr/lib/lives/plugins/effects/rendered/photo_still
+  /usr/lib/lives/plugins/effects/rendered/pixilate
+  /usr/lib/lives/plugins/effects/rendered/posterize
+  /usr/lib/lives/plugins/effects/rendered/randomzoom
+  /usr/lib/lives/plugins/effects/rendered/resize
+  /usr/lib/lives/plugins/effects/rendered/rotate
+  /usr/lib/lives/plugins/effects/rendered/saturation_change
+  /usr/lib/lives/plugins/effects/rendered/sepia
+  /usr/lib/lives/plugins/effects/rendered/shift_horizontal
+  /usr/lib/lives/plugins/effects/rendered/shift_vertical
+  /usr/lib/lives/plugins/effects/rendered/shrink_expand
+  /usr/lib/lives/plugins/effects/rendered/skip_forwards
+  /usr/lib/lives/plugins/effects/rendered/solarize
+  /usr/lib/lives/plugins/effects/rendered/spin
+  /usr/lib/lives/plugins/effects/rendered/spread
+  /usr/lib/lives/plugins/effects/rendered/swirl
+  /usr/lib/lives/plugins/effects/rendered/textover
+  /usr/lib/lives/plugins/effects/rendered/transition_bwthresh
+  /usr/lib/lives/plugins/effects/rendered/transition_checkerboard
+  /usr/lib/lives/plugins/effects/rendered/transition_fade2
+  /usr/lib/lives/plugins/effects/rendered/transition_splice
+  /usr/lib/lives/plugins/effects/rendered/trim_frames
+  /usr/lib/lives/plugins/effects/rendered/tunnel
+  /usr/lib/lives/plugins/effects/rendered/wave
+  /usr/lib/lives/plugins/encoders/encodedv_encoder
+  /usr/lib/lives/plugins/encoders/ffmpeg_encoder
+  /usr/lib/lives/plugins/encoders/mencoder_encoder
+  /usr/lib/lives/plugins/encoders/mjpegtools_encoder
+  /usr/lib/lives/plugins/encoders/multi_encoder
+  /usr/lib/lives/plugins/encoders/pdf_encoder
+  /usr/lib/lives/plugins/encoders/qtutils_encoder
+  /usr/lib/lives/plugins/encoders/sswf_encoder
+  /usr/lib/lives/plugins/encoders/transcode_encoder
+  /usr/lib/lives/plugins/playback/video/SDL.dll
+  /usr/lib/lives/plugins/playback/video/SDL.la
+  /usr/lib/lives/plugins/playback/video/lives2lives_stream.dll
+  /usr/lib/lives/plugins/playback/video/lives2lives_stream.la
+  /usr/lib/lives/plugins/playback/video/yuv4mpeg_stream.dll
+  /usr/lib/lives/plugins/playback/video/yuv4mpeg_stream.la
+  /usr/share/applications/LiVES.desktop
+  /usr/share/doc/lives-0.9.9.4/ABOUT-NLS
+  /usr/share/doc/lives-0.9.9.4/AUTHORS
+  /usr/share/doc/lives-0.9.9.4/BUGS
+  /usr/share/doc/lives-0.9.9.4/COPYING
+  /usr/share/doc/lives-0.9.9.4/ChangeLog
+  /usr/share/doc/lives-0.9.9.4/FEATURES
+  /usr/share/doc/lives-0.9.9.4/GETTING.STARTED
+  /usr/share/doc/lives-0.9.9.4/INSTALL
+  /usr/share/doc/lives-0.9.9.4/LiVES-Perl.sxw
+  /usr/share/doc/lives-0.9.9.4/NEWS
+  /usr/share/doc/lives-0.9.9.4/README
+  /usr/share/doc/lives-0.9.9.4/README.multi_encoder
+  /usr/share/doc/lives-0.9.9.4/RFX.spec
+  /usr/share/doc/lives-0.9.9.4/clip_format.txt
+  /usr/share/doc/lives-0.9.9.4/lives-OMC.txt
+  /usr/share/doc/lives-0.9.9.4/rfxbuilder.sxw
+  /usr/share/doc/lives-0.9.9.4/weedevents.txt
+  /usr/share/doc/lives-0.9.9.4/weedspec.txt
+  /usr/share/lives/default.keymap
+  /usr/share/lives/icons/audio.png
+  /usr/share/lives/icons/fullscreen.png
+  /usr/share/lives/icons/loop.png
+  /usr/share/lives/icons/playsel.png
+  /usr/share/lives/icons/sepwin.png
+  /usr/share/lives/icons/volume_mute.png
+  /usr/share/lives/icons/zoom-in.png
+  /usr/share/lives/icons/zoom-out.png
+  /usr/share/lives/plugins/effects/RFXscripts/blank_frames.script
+  /usr/share/lives/plugins/effects/RFXscripts/blur.script
+  /usr/share/lives/plugins/effects/RFXscripts/brightness_change.script
+  /usr/share/lives/plugins/effects/RFXscripts/charcoal.script
+  /usr/share/lives/plugins/effects/RFXscripts/colorize.script
+  /usr/share/lives/plugins/effects/RFXscripts/colour_filter.script
+  /usr/share/lives/plugins/effects/RFXscripts/colour_replace.script
+  /usr/share/lives/plugins/effects/RFXscripts/contrast.script
+  /usr/share/lives/plugins/effects/RFXscripts/cycle.script
+  /usr/share/lives/plugins/effects/RFXscripts/deinterlace.script
+  /usr/share/lives/plugins/effects/RFXscripts/despekle.script
+  /usr/share/lives/plugins/effects/RFXscripts/dream.script
+  /usr/share/lives/plugins/effects/RFXscripts/edge_detect.script
+  /usr/share/lives/plugins/effects/RFXscripts/emboss.script
+  /usr/share/lives/plugins/effects/RFXscripts/enhance.script
+  /usr/share/lives/plugins/effects/RFXscripts/flip.script
+  /usr/share/lives/plugins/effects/RFXscripts/flop.script
+  /usr/share/lives/plugins/effects/RFXscripts/frame_calculator.script
+  /usr/share/lives/plugins/effects/RFXscripts/gamma_change.script
+  /usr/share/lives/plugins/effects/RFXscripts/gen_blank_frames.script
+  /usr/share/lives/plugins/effects/RFXscripts/gen_clip_from_image.script
+  /usr/share/lives/plugins/effects/RFXscripts/gen_coloured_frames.script
+  /usr/share/lives/plugins/effects/RFXscripts/gen_text.script
+  /usr/share/lives/plugins/effects/RFXscripts/hue_change.script
+  /usr/share/lives/plugins/effects/RFXscripts/jumble.script
+  /usr/share/lives/plugins/effects/RFXscripts/modulate.script
+  /usr/share/lives/plugins/effects/RFXscripts/monochrome.script
+  /usr/share/lives/plugins/effects/RFXscripts/negate.script
+  /usr/share/lives/plugins/effects/RFXscripts/noisify.script
+  /usr/share/lives/plugins/effects/RFXscripts/normalize.script
+  /usr/share/lives/plugins/effects/RFXscripts/photo_still.script
+  /usr/share/lives/plugins/effects/RFXscripts/pixilate.script
+  /usr/share/lives/plugins/effects/RFXscripts/posterize.script
+  /usr/share/lives/plugins/effects/RFXscripts/randomzoom.script
+  /usr/share/lives/plugins/effects/RFXscripts/resize.script
+  /usr/share/lives/plugins/effects/RFXscripts/rotate.script
+  /usr/share/lives/plugins/effects/RFXscripts/saturation_change.script
+  /usr/share/lives/plugins/effects/RFXscripts/sepia.script
+  /usr/share/lives/plugins/effects/RFXscripts/shift_horizontal.script
+  /usr/share/lives/plugins/effects/RFXscripts/shift_vertical.script
+  /usr/share/lives/plugins/effects/RFXscripts/shrink_expand.script
+  /usr/share/lives/plugins/effects/RFXscripts/skip_forwards.script
+  /usr/share/lives/plugins/effects/RFXscripts/solarize.script
+  /usr/share/lives/plugins/effects/RFXscripts/spin.script
+  /usr/share/lives/plugins/effects/RFXscripts/spread.script
+  /usr/share/lives/plugins/effects/RFXscripts/swirl.script
+  /usr/share/lives/plugins/effects/RFXscripts/textover.script
+  /usr/share/lives/plugins/effects/RFXscripts/transition_bwthresh.script
+  /usr/share/lives/plugins/effects/RFXscripts/transition_checkerboard.script
+  /usr/share/lives/plugins/effects/RFXscripts/transition_fade.script
+  /usr/share/lives/plugins/effects/RFXscripts/transition_splice.script
+  /usr/share/lives/plugins/effects/RFXscripts/trim_frames.script
+  /usr/share/lives/plugins/effects/RFXscripts/tunnel.script
+  /usr/share/lives/plugins/effects/RFXscripts/wave.script
+  /usr/share/lives/themes/camera/frame.jpg
+  /usr/share/lives/themes/camera/main.jpg
+  /usr/share/lives/themes/cutting_room/frame.jpg
+  /usr/share/lives/themes/cutting_room/main.jpg
+  /usr/share/lives/themes/default/frame.jpg
+  /usr/share/lives/themes/default/main.jpg
+  /usr/share/lives/themes/editor/frame.jpg
+  /usr/share/lives/themes/editor/main.jpg
+  /usr/share/lives/themes/greenish/frame.jpg
+  /usr/share/lives/themes/greenish/main.jpg
+  /usr/share/lives/themes/pinks/frame.jpg
+  /usr/share/lives/themes/pinks/main.jpg
+  /usr/share/lives/themes/sunburst/frame.jpg
+  /usr/share/lives/themes/sunburst/main.jpg
+  /usr/share/locale/cs/LC_MESSAGES/lives.mo
+  /usr/share/locale/de_DE/LC_MESSAGES/lives.mo
+  /usr/share/locale/fr/LC_MESSAGES/lives.mo
+  /usr/share/locale/hu/LC_MESSAGES/lives.mo
+  /usr/share/locale/ja/LC_MESSAGES/lives.mo
+  /usr/share/locale/nl_NL/LC_MESSAGES/lives.mo
+  /usr/share/locale/pt/LC_MESSAGES/lives.mo
+  /usr/share/locale/pt_BR/LC_MESSAGES/lives.mo
+  /usr/share/pixmaps/lives.xpm
+
+------------------
+
+Port Notes:
+
+----- version 0.9.9.4-1 -----
+Initial release for Cygwin.
+
+
+Cygwin port maintained by:
+http://sourceware.org/cygwinports/
