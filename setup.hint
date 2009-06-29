@@ -1,5 +1,5 @@
 category: Video
-requires: cygwin libdv4 libgdk_pixbuf2.0_0 libglib2.0_0 libgtk2.0_0 libintl8 libjack0 libmjpegtools19 libogg0 liboil0.3_0 libSDL1.2_0 libtheora0 libvisual0.4_0 libvisual0.4-plugins libX11_6 cdda2wav cdrkit ImageMagick mjpegtools mplayer perl python sox transcode
+requires: libdv4 libgdk_pixbuf2.0_0 libglib2.0_0 libgtk2.0_0 libintl8 libjack0 libmjpegtools19 libogg0 liboil0.3_0 libSDL1.2_0 libtheora0 libvisual0.4_0 libvisual0.4-plugins libX11_6 cdda2wav cdrkit ImageMagick mjpegtools mplayer perl python sox transcode
 sdesc: "Video Editing System"
 ldesc: "LiVES mixes realtime video performance and non-linear editing in 
 one application. It will let you start editing and making video right 
