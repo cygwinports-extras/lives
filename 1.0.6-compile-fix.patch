@@ -1,0 +1,12 @@
+--- origsrc/lives-1.0.6/src/main.c	2009-11-01 15:19:55.000000000 -0600
++++ src/lives-1.0.6/src/main.c	2009-11-18 03:19:11.333673300 -0600
+@@ -1056,7 +1056,9 @@ static void lives_init(_ign_opts *ign_op
+     gtk_widget_modify_bg (mainw->t_infobutton, GTK_STATE_PRELIGHT, &palette->fade_colour);
+ 
+ 
++#if 0
+   }
++#endif
+ }
+ 
+ 

@@ -53,6 +53,24 @@
  
  
  if HAVE_LIBDV
+--- origsrc/lives-1.0.6/lives-plugins/plugins/decoders/dv_decoder.c	2009-08-11 15:42:47.000000000 -0500
++++ src/lives-1.0.6/lives-plugins/plugins/decoders/dv_decoder.c	2009-11-18 03:35:35.804589800 -0600
+@@ -26,6 +26,15 @@
+ 
+ #include "dv_decoder.h"
+ 
++#if defined(__APPLE__) || defined(__CYGWIN__)
++#ifndef off64_t
++#define off64_t off_t
++#endif
++#ifndef lseek64
++#define lseek64 lseek
++#endif
++#endif
++
+ static lives_clip_data_t cdata;
+ static dv_priv_t priv;
+ 
 --- origsrc/lives-0.9.9.4/lives-plugins/plugins/playback/video/Makefile.am	2008-11-12 05:05:19.000000000 -0600
 +++ src/lives-0.9.9.4/lives-plugins/plugins/playback/video/Makefile.am	2008-12-29 00:20:24.128125000 -0600
 @@ -8,9 +8,14 @@
@@ -113,6 +131,27 @@
  
  AM_LDFLAGS = $(shared_ldflags) @GTK_LIBS@ -O3 -L/usr/lib64  ../../../libweed/libweed-utils.la ../../../libweed/libweed-plugin-utils.la
  AM_CFLAGS = $(shared_cflags) -I$(srcdir)/.. @GTK_CFLAGS@ -O3 -ffast-math
+--- origsrc/lives-1.0.6/src/Makefile.am	2009-08-11 15:42:39.000000000 -0500
++++ src/lives-1.0.6/src/Makefile.am	2009-11-18 03:23:13.399295300 -0600
+@@ -4,6 +4,10 @@ if ENABLE_OSC
+ osc_INCLUDES=-I $(top_srcdir)/libOSC
+ endif
+ 
++if IS_CYGWIN
++cygwin_CFLAGS=-DIS_CYGWIN=1
++endif
++
+ if IS_DARWIN
+ darwin_INCLUDES=-I /sw/include
+ darwin_CFLAGS=-DIS_DARWIN=1
+@@ -105,6 +109,6 @@ lives_exe_SOURCES = \
+ lives_exe_LDADD = @GTK_LIBS_NODYNAMIC@ @MJPEGTOOLS_LIBS@ $(osc_LDADD) $(jack_LDADD) $(ldvgrab_LDADD) $(oil_LDADD) -lpthread $(libweed_slice_LDADD) ../libweed/libweed-utils.la
+ 
+ lives_exe_LDFLAGS = -O3
+-AM_CFLAGS = -O3 $(yuv4mpeg_CFLAGS) $(ldvgrab_CFLAGS) $(dvgrab_CFLAGS) $(oil_CFLAGS) $(darwin_CFLAGS) $(irix_CFLAGS) $(linux_CFLAGS) $(osc_CFLAGS) -DLIVES_LIBDIR=\""$(libdir)"\"
++AM_CFLAGS = -O3 $(yuv4mpeg_CFLAGS) $(ldvgrab_CFLAGS) $(dvgrab_CFLAGS) $(oil_CFLAGS) $(cygwin_CFLAGS) $(darwin_CFLAGS) $(irix_CFLAGS) $(linux_CFLAGS) $(osc_CFLAGS) -DLIVES_LIBDIR=\""$(libdir)"\"
+ 
+ 
 --- origsrc/lives-0.9.9.4/src/htmsocket.c	2008-07-11 01:02:34.000000000 -0500
 +++ src/lives-0.9.9.4/src/htmsocket.c	2008-12-29 00:20:24.175000000 -0600
 @@ -11,6 +11,7 @@
@@ -133,6 +172,17 @@
  #include <jack/jack.h>
  #include <jack/transport.h>
  
+--- origsrc/lives-1.0.6/src/main.h	2009-10-22 09:35:41.000000000 -0500
++++ src/lives-1.0.6/src/main.h	2009-11-18 03:20:35.246219600 -0600
+@@ -91,7 +91,7 @@ POSSIBILITY OF SUCH DAMAGES.
+ #define LIVES_DEVICE_DIR "/dev/"
+ 
+ 
+-#ifdef IS_DARWIN
++#if defined(IS_DARWIN) || defined(IS_CYGWIN)
+ #ifndef off64_t
+ #define off64_t off_t
+ #endif
 --- origsrc/lives-0.9.9.4/src/plugins.c	2008-12-03 08:07:22.000000000 -0600
 +++ src/lives-0.9.9.4/src/plugins.c	2008-12-29 00:20:24.206250000 -0600
 @@ -931,7 +931,7 @@
