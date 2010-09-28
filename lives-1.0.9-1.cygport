@@ -5,9 +5,11 @@ PATCH_URI="
 	0.9.9.4-vpath.patch
 	1.0.6-cygwin.patch
 	1.0.6-compile-fix.patch
+	1.0.9-compile-libOSC.patch
 	1.0.6-noinst-headers.patch
 "
 
 DIFF_EXCLUDES="intl m4 po"
+DISTCLEANFILES="po/stamp-po"
 
-CYGCONF_ARGS="--disable-static"
+CYGCONF_ARGS="--disable-static --disable-liboil"

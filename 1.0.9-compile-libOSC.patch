@@ -1,0 +1,10 @@
+--- origsrc/lives-1.0.9/libOSC/sendOSC/htmsocket.c	2009-08-11 15:44:36.000000000 -0500
++++ src/lives-1.0.9/libOSC/sendOSC/htmsocket.c	2010-09-27 14:27:51.198575400 -0500
+@@ -40,7 +40,6 @@ The OSC webpage is http://cnmat.cnmat.be
+ #include <sys/stat.h>
+ #include <netinet/in.h>
+ 
+-#include <rpc/rpc.h>
+ #include <sys/socket.h>
+ #include <sys/un.h>
+ #include <sys/times.h>
