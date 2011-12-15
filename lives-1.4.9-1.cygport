@@ -1,0 +1,11 @@
+DESCRIPTION="Video Editing System"
+HOMEPAGE="http://lives.sourceforge.net/"
+SRC_URI="http://www.xs4all.nl/%7Esalsaman/lives/current/LiVES-${PV}.tar.bz2"
+PATCH_URI="
+	1.4.9-vpath.patch
+	1.4.9-cygwin.patch
+	1.0.9-compile-libOSC.patch
+	1.4.9-noinst-libweed.patch
+"
+
+CYGCONF_ARGS="--disable-static --disable-liboil --disable-doxygen"

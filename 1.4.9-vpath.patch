@@ -1,0 +1,101 @@
+--- origsrc/lives-1.4.9/configure.in	2011-12-14 21:16:25.904016200 -0600
++++ src/lives-1.4.9/configure.in	2011-12-14 19:45:42.000000000 -0600
+@@ -37,7 +37,7 @@ AM_PROG_AS
+ 
+ ACX_PTHREAD(PTHREAD_OK=true,PTHREAD_OK=false)
+ 
+-AC_CHECK_FILE(lives-plugins/Makefile.am,,[
++AC_CHECK_FILE($srcdir/lives-plugins/Makefile.am,,[
+ echo "LiVES plugins were not found. Please make sure you have checked them out."
+ echo
+ echo
+--- origsrc/lives-1.4.9/lives-plugins/plugins/decoders/mkv_decoder.c	2011-12-07 23:33:19.000000000 -0600
++++ src/lives-1.4.9/lives-plugins/plugins/decoders/mkv_decoder.c	2011-12-14 20:08:12.009858900 -0600
+@@ -53,6 +53,7 @@ const char *plugin_version="LiVES mkv de
+ #ifdef HAVE_SYSTEM_WEED_COMPAT
+ #include "weed/weed-compat.h"
+ #else
++#include "../../../libweed/weed-palettes.h"
+ #include "../../../libweed/weed-compat.h"
+ #endif
+ 
+--- origsrc/lives-1.4.9/lives-plugins/weed-plugins/Makefile.am	2011-12-14 19:45:42.577675800 -0600
++++ src/lives-1.4.9/lives-plugins/weed-plugins/Makefile.am	2011-12-14 20:37:42.019097600 -0600
+@@ -90,8 +90,8 @@ EXTRA_DIST=data icons
+ 
+ install-data-local:
+ 	mkdir -p $(DESTDIR)$(fxpluginslibdir)
+-	cp -rf data/ $(DESTDIR)$(fxpluginslibdir)
+-	cp -rf icons/ $(DESTDIR)$(fxpluginslibdir)
++	cp -rf $(srcdir)/data/ $(DESTDIR)$(fxpluginslibdir)
++	cp -rf $(srcdir)/icons/ $(DESTDIR)$(fxpluginslibdir)
+ 	$(MAKE) -i install-data-local-remove-vcs-files
+ 
+ install-data-local-remove-vcs-files:
+--- origsrc/lives-1.4.9/lives-plugins/weed-plugins/gdk/Makefile.am	2011-12-14 19:45:42.580676000 -0600
++++ src/lives-1.4.9/lives-plugins/weed-plugins/gdk/Makefile.am	2011-12-14 20:36:33.799195700 -0600
+@@ -36,8 +36,8 @@ EXTRA_DIST=data icons
+ 
+ install-data-local:
+ 	mkdir -p $(DESTDIR)$(fxpluginslibdir)
+-	cp -rf data/ $(DESTDIR)$(fxpluginslibdir)
+-	cp -rf icons/ $(DESTDIR)$(fxpluginslibdir)
++	cp -rf $(srcdir)/data/ $(DESTDIR)$(fxpluginslibdir)
++	cp -rf $(srcdir)/icons/ $(DESTDIR)$(fxpluginslibdir)
+ 	$(MAKE) -i install-data-local-remove-vcs-files
+ 
+ install-data-local-remove-vcs-files:
+--- origsrc/lives-1.4.9/po/update_with_plugins.sh	2010-09-03 16:23:36.000000000 -0500
++++ src/lives-1.4.9/po/update_with_plugins.sh	2011-12-14 20:57:28.460958200 -0600
+@@ -12,16 +12,17 @@
+ 
+ #syntax ./update_with_plugins.sh $(PACKAGE) $(prefix)
+ 
++srcdir=`dirname $0`
+ pwd=`pwd`
+ 
+ cd po
+ 
+-rm $2.pot
++rm -f $2.pot
+ make $2.pot
+ #
+ #
+ # Compile plugin list $(DESTDIR) $(prefix)
+-./make_rfx_builtin_list.pl $4 $3
++$srcdir/make_rfx_builtin_list.pl $4 $3
+ 
+ if ! test -s POTFILES_PLUGINS ; then
+  echo no rendered effect plugins found.; exit 0;
+@@ -30,10 +31,10 @@ fi
+ #
+ # Add message data from plugins and smogrify
+ #
+-./pxgettext $3 $2.pot `cat POTFILES_PLUGINS` >> $2.pot
++$srcdir/pxgettext $3 $2.pot `cat POTFILES_PLUGINS` >> $2.pot
+ 
+ # LiVES must match with $GUI_NAME in smogrify
+-./update_with_smogrify smogrify $2.pot LiVES >> $2.pot
++$srcdir/update_with_smogrify smogrify $2.pot LiVES >> $2.pot
+ #
+ #
+ # Update $LANG.po
+--- origsrc/lives-1.4.9/src/Makefile.am	2011-12-14 19:45:42.583676100 -0600
++++ src/lives-1.4.9/src/Makefile.am	2011-12-14 19:51:51.772792500 -0600
+@@ -99,14 +99,14 @@ if HAVE_SYSTEM_WEED
+ libweed_LDADD = @WEED_LIBS@ @WEED_UTILS_LIBS@
+ libweed_CFLAGS = @WEED_CFLAGS@ -DHAVE_SYSTEM_WEED=1
+ else
+-libweed_LDADD = $(abs_top_srcdir)/libweed/libweed.la $(abs_top_srcdir)/libweed/libweed-utils.la
++libweed_LDADD = $(top_builddir)/libweed/libweed.la $(top_builddir)/libweed/libweed-utils.la
+ endif
+ else
+ if HAVE_SYSTEM_WEED
+ libweed_LDADD = @WEED_SLICE_LIBS@ @WEED_UTILS_LIBS@
+ libweed_CFLAGS = @WEED_CFLAGS@ -DHAVE_SYSTEM_WEED=1
+ else
+-libweed_LDADD = $(abs_top_srcdir)/libweed/libweed_slice.la $(abs_top_srcdir)/libweed/libweed-utils.la
++libweed_LDADD = $(top_builddir)/libweed/libweed_slice.la $(top_builddir)/libweed/libweed-utils.la
+ endif
+ endif
+ 

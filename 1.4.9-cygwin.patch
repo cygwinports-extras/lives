@@ -1,0 +1,168 @@
+--- origsrc/lives-1.4.9/configure.in	2011-12-14 17:36:44.475081600 -0600
++++ src/lives-1.4.9/configure.in	2011-12-14 19:30:48.504537700 -0600
+@@ -44,12 +44,16 @@ echo
+ exit
+ ])
+ 
++IS_CYGWIN="false"
+ IS_DARWIN="false"
+ IS_IRIX="false"
+ IS_SOLARIS="false"
+ IS_LINUX_GNU="false"
+ 
+ case "{$target_os}" in
++ *cygwin*)
++   IS_CYGWIN="true"
++  ;;
+  *darwin*)
+    IS_DARWIN="true"
+   ;;
+@@ -66,6 +70,7 @@ case "{$target_os}" in
+   ;;
+ esac
+ 
++AM_CONDITIONAL(IS_CYGWIN,$IS_CYGWIN)
+ AM_CONDITIONAL(IS_DARWIN,$IS_DARWIN)
+ AM_CONDITIONAL(IS_IRIX,$IS_IRIX)
+ AM_CONDITIONAL(IS_LINUX_GNU,$IS_LINUX_GNU)
+--- origsrc/lives-1.4.9/lives-plugins/plugins/decoders/Makefile.am	2011-12-07 12:12:17.000000000 -0600
++++ src/lives-1.4.9/lives-plugins/plugins/decoders/Makefile.am	2011-12-14 19:35:33.860859200 -0600
+@@ -10,9 +10,14 @@ if IS_DARWIN
+ shared_ldflags =  -dynamiclib -module -avoid-version --tag=disable-static
+ shared_cflags = -fno-common
+ else
++if IS_CYGWIN
++shared_ldflags =  -shared -module -avoid-version -no-undefined --tag=disable-static
++shared_cflags = -DIS_CYGWIN=1
++else
+ shared_ldflags =  -shared -fPIC -DPIC -module -avoid-version --tag=disable-static
+ shared_cflags =  -fPIC -DPIC
+ endif
++endif
+ 
+ if HAVE_SYSTEM_WEED
+ weed_cflags = -DHAVE_SYSTEM_WEED=1
+--- origsrc/lives-1.4.9/lives-plugins/plugins/decoders/decplugin.h	2011-12-07 23:33:21.000000000 -0600
++++ src/lives-1.4.9/lives-plugins/plugins/decoders/decplugin.h	2011-12-14 20:01:56.777396800 -0600
+@@ -22,7 +22,7 @@ extern "C"
+ #include "../../../libweed/weed-palettes.h"
+ #endif
+ 
+-#ifdef IS_DARWIN
++#if defined(IS_DARWIN) || defined(IS_CYGWIN)
+ #ifndef lseek64
+ #define lseek64 lseek
+ #endif
+--- origsrc/lives-1.4.9/lives-plugins/plugins/playback/video/Makefile.am	2011-11-27 16:06:55.000000000 -0600
++++ src/lives-1.4.9/lives-plugins/plugins/playback/video/Makefile.am	2011-12-14 19:35:27.364487600 -0600
+@@ -8,9 +8,13 @@ if IS_DARWIN
+ shared_ldflags =  -dynamiclib -module -avoid-version --tag=disable-static
+ shared_cflags = -fno-common
+ else
++if IS_CYGWIN
++shared_ldflags =  -shared -module -avoid-version -no-undefined --tag=disable-static
++else
+ shared_ldflags =  -shared -fPIC -DPIC -module -avoid-version --tag=disable-static
+ shared_cflags =  -fPIC -DPIC
+ endif
++endif
+ 
+ if HAVE_SYSTEM_WEED
+ weed_cflags = -DHAVE_SYSTEM_WEED=1
+--- origsrc/lives-1.4.9/lives-plugins/weed-plugins/Makefile.am	2011-10-14 17:35:33.000000000 -0500
++++ src/lives-1.4.9/lives-plugins/weed-plugins/Makefile.am	2011-12-14 19:36:03.924578700 -0600
+@@ -12,10 +12,14 @@ shared_ldflags = -dynamiclib -module -av
+ 
+ shared_cflags = -fno-common
+ else
++if IS_CYGWIN
++shared_ldflags = -shared -Wl,-Bsymbolic -module -avoid-version -no-undefined --tag=disable-static
++else
+ shared_ldflags = -shared -fPIC -DPIC -Wl,-Bsymbolic -module -avoid-version --tag=disable-static
+ 
+ shared_cflags = -fPIC -DPIC
+ endif
++endif
+ 
+ if HAVE_SYSTEM_WEED
+ AM_LDFLAGS = $(shared_ldflags) @WEED_UTILS_LIBS@ @WEED_PLUGIN_UTILS_LIBS@
+--- origsrc/lives-1.4.9/lives-plugins/weed-plugins/gdk/Makefile.am	2011-10-14 17:35:33.000000000 -0500
++++ src/lives-1.4.9/lives-plugins/weed-plugins/gdk/Makefile.am	2011-12-14 19:36:40.092647400 -0600
+@@ -8,9 +8,13 @@ if IS_DARWIN
+ shared_ldflags = -dynamiclib -module -avoid-version --tag=disable-static
+ shared_cflags = -fno-common
+ else
++if IS_CYGWIN
++shared_ldflags = -shared -Wl,-Bsymbolic -module -avoid-version -no-undefined --tag=disable-static
++else
+ shared_ldflags = -shared -fPIC -DPIC -Wl,-Bsymbolic -module -avoid-version --tag=disable-static
+ shared_cflags = -fPIC -DPIC
+ endif
++endif
+ 
+ if HAVE_SYSTEM_WEED
+ AM_LDFLAGS = $(shared_ldflags) @GTK_LIBS@ @WEED_UTILS_LIBS@ @WEED_PLUGIN_UTILS_LIBS@
+--- origsrc/lives-1.4.9/src/Makefile.am	2011-12-07 12:18:28.000000000 -0600
++++ src/lives-1.4.9/src/Makefile.am	2011-12-14 19:37:21.409010600 -0600
+@@ -6,6 +6,10 @@ if ENABLE_OSC
+ osc_INCLUDES=-I $(top_srcdir)/libOSC
+ endif
+ 
++if IS_CYGWIN
++cygwin_CFLAGS=-DIS_CYGWIN=1
++endif
++
+ if IS_DARWIN
+ darwin_INCLUDES=-I /sw/include
+ darwin_CFLAGS=-DIS_DARWIN=1
+@@ -184,7 +188,7 @@ lives_exe_LDADD = @GTK_LIBS_NODYNAMIC@ @
+ 	@UNICAP_LIBS@
+ 
+ AM_CFLAGS = -Wstrict-aliasing=0 $(yuv4mpeg_CFLAGS) $(ldvgrab_CFLAGS) $(dvgrab_CFLAGS) $(oil_CFLAGS) \
+-	$(darwin_CFLAGS) $(irix_CFLAGS) $(linux_CFLAGS) $(solaris_CFLAGS) $(osc_CFLAGS) $(alsa_CFLAGS) $(png_CFLAGS) $(swscale_CFLAGS) \
++	$(cygwin_CFLAGS) $(darwin_CFLAGS) $(irix_CFLAGS) $(linux_CFLAGS) $(solaris_CFLAGS) $(osc_CFLAGS) $(alsa_CFLAGS) $(png_CFLAGS) $(swscale_CFLAGS) \
+ 	$(jack_CFLAGS) $(pulse_CFLAGS) $(giw_CFLAGS) $(unicap_CFLAGS) $(libweed_CFLAGS) \
+ 	-DLIVES_LIBDIR=\""$(libdir)"\" $(gtk_def)
+ 
+--- origsrc/lives-1.4.9/src/effects-weed.c	2011-12-07 23:32:59.000000000 -0600
++++ src/lives-1.4.9/src/effects-weed.c	2011-12-14 19:39:47.791383200 -0600
+@@ -3268,7 +3268,7 @@ void weed_load_all (void) {
+     for (plugin_idx=0;plugin_idx<listlen;plugin_idx++) {
+       threaded_dialog_spin();
+       plugin_name=g_list_nth_data(weed_plugin_list,plugin_idx);
+-      if (!strncmp(plugin_name+strlen(plugin_name)-3,".so",3)) {
++      if (!strncmp(plugin_name+strlen(plugin_name)-sizeof(G_MODULE_SUFFIX),"."G_MODULE_SUFFIX,sizeof(G_MODULE_SUFFIX))) {
+ 	plugin_path=g_strdup_printf("%s/%s",dirs[i],plugin_name);
+ 	load_weed_plugin(plugin_name,plugin_path,dirs[i]);
+ 	g_free(plugin_name);
+--- origsrc/lives-1.4.9/src/main.h	2011-12-08 06:36:09.000000000 -0600
++++ src/lives-1.4.9/src/main.h	2011-12-14 19:38:17.345209900 -0600
+@@ -103,7 +103,7 @@ POSSIBILITY OF SUCH DAMAGES.
+ #define LIVES_FEATURE_URL "http://sourceforge.net/tracker/?group_id=64341&atid=507142"
+ #define LIVES_TRANSLATE_URL "https://translations.launchpad.net/lives/trunk"
+ 
+-#ifdef IS_DARWIN
++#if defined(IS_DARWIN) || defined(IS_CYGWIN)
+ #ifndef off64_t
+ #define off64_t off_t
+ #endif
+--- origsrc/lives-1.4.9/src/plugins.c	2011-12-07 23:33:00.000000000 -0600
++++ src/lives-1.4.9/src/plugins.c	2011-12-14 19:38:55.094369100 -0600
+@@ -1038,7 +1038,7 @@ _vid_playback_plugin *open_vid_playback_
+ 
+   // TODO - if using, get fixed_fps,fwidth,fheight,palette,argc and argv from a file
+ 
+-  gchar *plugname=g_strdup_printf ("%s%s%s/%s.so",prefs->lib_dir,PLUGIN_EXEC_DIR,PLUGIN_VID_PLAYBACK,name);
++  gchar *plugname=g_strdup_printf ("%s%s%s/%s."G_MODULE_SUFFIX,prefs->lib_dir,PLUGIN_EXEC_DIR,PLUGIN_VID_PLAYBACK,name);
+   void *handle=dlopen(plugname,RTLD_LAZY);
+   gboolean OK=TRUE;
+   gchar *msg,*tmp;
+@@ -2107,7 +2107,7 @@ lives_decoder_sys_t *open_decoder_plugin
+ 
+   dplug->name=NULL;
+ 
+-  plugname=g_strdup_printf ("%s%s%s/%s.so",prefs->lib_dir,PLUGIN_EXEC_DIR,PLUGIN_DECODERS,plname);
++  plugname=g_strdup_printf ("%s%s%s/%s."G_MODULE_SUFFIX,prefs->lib_dir,PLUGIN_EXEC_DIR,PLUGIN_DECODERS,plname);
+   dplug->handle=dlopen(plugname,RTLD_LAZY);
+   g_free (plugname);
+ 

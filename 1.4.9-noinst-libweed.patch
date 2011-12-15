@@ -1,0 +1,20 @@
+--- origsrc/lives-1.4.9/libweed/Makefile.am	2011-11-19 12:23:27.000000000 -0600
++++ src/lives-1.4.9/libweed/Makefile.am	2011-12-14 19:40:36.951194900 -0600
+@@ -40,7 +40,7 @@ endif
+ 
+ EXTRA_DIST = libweed.doxygen libweed.pc libweed-plugin-utils.pc libweed_slice.pc libweed-utils.pc libweed-compat.pc
+ 
+-lib_LTLIBRARIES = libweed.la libweed_slice.la libweed-utils.la libweed-plugin-utils.la
++noinst_LTLIBRARIES = libweed.la libweed_slice.la libweed-utils.la libweed-plugin-utils.la
+ 
+ libweed_la_SOURCES = weed.c
+ 
+@@ -50,7 +50,7 @@ libweed_utils_la_SOURCES = weed-utils.c
+ 
+ libweed_plugin_utils_la_SOURCES = weed-plugin-utils.c
+ 
+-libweedinclude_HEADERS = weed.h weed-host.h weed-plugin.h weed-utils.h weed-events.h weed-palettes.h weed-effects.h \
++noinst_HEADERS = weed.h weed-host.h weed-plugin.h weed-utils.h weed-events.h weed-palettes.h weed-effects.h \
+ 	weed-plugin-utils.h weed-compat.h
+ 
+ libweedincludedir = $(includedir)/weed
