@@ -1,5 +1,5 @@
 category: Video
-requires: libavcodec52 libavformat52 libavutil50 libcairo2 libdv4 libgcc1 libgdk_pixbuf2.0_0 libglib2.0_0 libgtk2.0_0 libintl8 libmjpegtools2.0_0 libogg0 libpango1.0_0 libpng14 libpulse0 libschroedinger1.0_0 libSDL1.2_0 libswscale0 libtheora0 libX11_6 cdrkit ImageMagick mjpegtools mplayer perl python sox transcode
+requires: libavcodec53 libavformat53 libavutil51 libcairo2 libdv4 libgcc1 libgdk_pixbuf2.0_0 libglib2.0_0 libgtk2.0_0 libintl8 libmjpegtools2.0_0 libogg0 libpango1.0_0 libpng14 libpulse0 libschroedinger1.0_0 libSDL1.2_0 libswscale2 libtheora0 libX11_6 cdrkit ImageMagick mjpegtools mplayer perl python sox transcode
 sdesc: "Video Editing System"
 ldesc: "LiVES mixes realtime video performance and non-linear editing in 
 one application. It will let you start editing and making video right 

@@ -9,3 +9,5 @@ PATCH_URI="
 "
 
 CYGCONF_ARGS="--disable-static --disable-liboil --disable-doxygen"
+
+KEEP_LA_FILES="none"

@@ -84,8 +84,8 @@
  endif
 +endif
  
+ 
  if HAVE_SYSTEM_WEED
- AM_LDFLAGS = $(shared_ldflags) @WEED_UTILS_LIBS@ @WEED_PLUGIN_UTILS_LIBS@
 --- origsrc/lives-1.4.9/lives-plugins/weed-plugins/gdk/Makefile.am	2011-10-14 17:35:33.000000000 -0500
 +++ src/lives-1.4.9/lives-plugins/weed-plugins/gdk/Makefile.am	2011-12-14 19:36:40.092647400 -0600
 @@ -8,9 +8,13 @@ if IS_DARWIN
@@ -121,7 +121,7 @@
  AM_CFLAGS = -Wstrict-aliasing=0 $(yuv4mpeg_CFLAGS) $(ldvgrab_CFLAGS) $(dvgrab_CFLAGS) $(oil_CFLAGS) \
 -	$(darwin_CFLAGS) $(irix_CFLAGS) $(linux_CFLAGS) $(solaris_CFLAGS) $(osc_CFLAGS) $(alsa_CFLAGS) $(png_CFLAGS) $(swscale_CFLAGS) \
 +	$(cygwin_CFLAGS) $(darwin_CFLAGS) $(irix_CFLAGS) $(linux_CFLAGS) $(solaris_CFLAGS) $(osc_CFLAGS) $(alsa_CFLAGS) $(png_CFLAGS) $(swscale_CFLAGS) \
- 	$(jack_CFLAGS) $(pulse_CFLAGS) $(giw_CFLAGS) $(unicap_CFLAGS) $(libweed_CFLAGS) \
+ 	$(jack_CFLAGS) $(pulse_CFLAGS) $(giw_CFLAGS) $(unicap_CFLAGS) $(libweed_CFLAGS) $(libweed_compat_CFLAGS) \
  	-DLIVES_LIBDIR=\""$(libdir)"\" $(gtk_def)
  
 --- origsrc/lives-1.4.9/src/effects-weed.c	2011-12-07 23:32:59.000000000 -0600
@@ -129,10 +129,10 @@
 @@ -3268,7 +3268,7 @@ void weed_load_all (void) {
      for (plugin_idx=0;plugin_idx<listlen;plugin_idx++) {
        threaded_dialog_spin();
-       plugin_name=g_list_nth_data(weed_plugin_list,plugin_idx);
+       plugin_name=(gchar *)g_list_nth_data(weed_plugin_list,plugin_idx);
 -      if (!strncmp(plugin_name+strlen(plugin_name)-3,".so",3)) {
 +      if (!strncmp(plugin_name+strlen(plugin_name)-sizeof(G_MODULE_SUFFIX),"."G_MODULE_SUFFIX,sizeof(G_MODULE_SUFFIX))) {
- 	plugin_path=g_strdup_printf("%s/%s",dirs[i],plugin_name);
+ 	plugin_path=g_build_filename(dirs[i],plugin_name,NULL);
  	load_weed_plugin(plugin_name,plugin_path,dirs[i]);
  	g_free(plugin_name);
 --- origsrc/lives-1.4.9/src/main.h	2011-12-08 06:36:09.000000000 -0600

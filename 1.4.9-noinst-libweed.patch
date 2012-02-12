@@ -1,6 +1,15 @@
---- origsrc/lives-1.4.9/libweed/Makefile.am	2011-11-19 12:23:27.000000000 -0600
-+++ src/lives-1.4.9/libweed/Makefile.am	2011-12-14 19:40:36.951194900 -0600
-@@ -40,7 +40,7 @@ endif
+--- origsrc/lives-1.6.1/libweed/Makefile.am	2012-02-09 17:30:46.792231100 -0600
++++ src/lives-1.6.1/libweed/Makefile.am	2012-02-09 22:48:40.577003300 -0600
+@@ -13,8 +13,6 @@
+ 
+ install-data-local:
+ 	make docs-doxygen
+-	mkdir -p "$(DESTDIR)$(libdir)/pkgconfig/"
+-	cp -f libweed*.pc "$(DESTDIR)$(libdir)/pkgconfig/"
+ 
+ if HAVE_DOXYGEN
+ docs-doxygen:
+@@ -40,7 +38,7 @@ endif
  
  EXTRA_DIST = libweed.doxygen libweed.pc libweed-plugin-utils.pc libweed_slice.pc libweed-utils.pc libweed-compat.pc
  
@@ -9,7 +18,7 @@
  
  libweed_la_SOURCES = weed.c
  
-@@ -50,7 +50,7 @@ libweed_utils_la_SOURCES = weed-utils.c
+@@ -50,7 +48,7 @@ libweed_utils_la_SOURCES = weed-utils.c
  
  libweed_plugin_utils_la_SOURCES = weed-plugin-utils.c
  

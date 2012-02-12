@@ -24,11 +24,11 @@
 @@ -90,8 +90,8 @@ EXTRA_DIST=data icons
  
  install-data-local:
- 	mkdir -p $(DESTDIR)$(fxpluginslibdir)
--	cp -rf data/ $(DESTDIR)$(fxpluginslibdir)
--	cp -rf icons/ $(DESTDIR)$(fxpluginslibdir)
-+	cp -rf $(srcdir)/data/ $(DESTDIR)$(fxpluginslibdir)
-+	cp -rf $(srcdir)/icons/ $(DESTDIR)$(fxpluginslibdir)
+ 	mkdir -p "$(DESTDIR)$(fxpluginslibdir)"
+-	cp -rf data/ "$(DESTDIR)$(fxpluginslibdir)"
+-	cp -rf icons/ "$(DESTDIR)$(fxpluginslibdir)"
++	cp -rf $(srcdir)/data/ "$(DESTDIR)$(fxpluginslibdir)"
++	cp -rf $(srcdir)/icons/ "$(DESTDIR)$(fxpluginslibdir)"
  	$(MAKE) -i install-data-local-remove-vcs-files
  
  install-data-local-remove-vcs-files:
@@ -37,11 +37,11 @@
 @@ -36,8 +36,8 @@ EXTRA_DIST=data icons
  
  install-data-local:
- 	mkdir -p $(DESTDIR)$(fxpluginslibdir)
--	cp -rf data/ $(DESTDIR)$(fxpluginslibdir)
--	cp -rf icons/ $(DESTDIR)$(fxpluginslibdir)
-+	cp -rf $(srcdir)/data/ $(DESTDIR)$(fxpluginslibdir)
-+	cp -rf $(srcdir)/icons/ $(DESTDIR)$(fxpluginslibdir)
+ 	mkdir -p "$(DESTDIR)$(fxpluginslibdir)"
+-	cp -rf data/ "$(DESTDIR)$(fxpluginslibdir)"
+-	cp -rf icons/ "$(DESTDIR)$(fxpluginslibdir)"
++	cp -rf $(srcdir)/data/ "$(DESTDIR)$(fxpluginslibdir)"
++	cp -rf $(srcdir)/icons/ "$(DESTDIR)$(fxpluginslibdir)"
  	$(MAKE) -i install-data-local-remove-vcs-files
  
  install-data-local-remove-vcs-files:
