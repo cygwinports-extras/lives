@@ -1,0 +1,26 @@
+NAME="lives"
+VERSION=1.6.4
+RELEASE=1
+CATEGORY="Video"
+SUMMARY="Video Editing System"
+DESCRIPTION="LiVES mixes realtime video performance and non-linear editing in
+one application. It will let you start editing and making video right away,
+without having to worry about formats, frame sizes, or framerates. It is a
+very flexible tool which can be used by both VJ's and video editors - mix and
+switch clips from the keyboard, trim and edit your clips, and bring them
+together using the multitrack timeline."
+HOMEPAGE="http://lives.sourceforge.net/"
+SRC_URI="http://www.xs4all.nl/%7Esalsaman/lives/current/LiVES-${PV}.tar.bz2"
+PATCH_URI="
+	1.4.9-vpath.patch
+	1.6.4-cygwin.patch
+	1.0.9-compile-libOSC.patch
+	1.4.9-noinst-libweed.patch
+	1.6.4-redecl-error.patch
+"
+
+REQUIRES="cdrkit ImageMagick mjpegtools mplayer perl python sox transcode"
+
+CYGCONF_ARGS="--disable-liboil --disable-doxygen"
+
+KEEP_LA_FILES="none"

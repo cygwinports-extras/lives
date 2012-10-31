@@ -1,9 +1,9 @@
 --- origsrc/lives-1.4.9/configure.in	2011-12-14 21:16:25.904016200 -0600
 +++ src/lives-1.4.9/configure.in	2011-12-14 19:45:42.000000000 -0600
 @@ -37,7 +37,7 @@ AM_PROG_AS
- 
  ACX_PTHREAD(PTHREAD_OK=true,PTHREAD_OK=false)
  
+ if test "$IS_MINGW" = "false"; then
 -AC_CHECK_FILE(lives-plugins/Makefile.am,,[
 +AC_CHECK_FILE($srcdir/lives-plugins/Makefile.am,,[
  echo "LiVES plugins were not found. Please make sure you have checked them out."
@@ -22,6 +22,19 @@
 --- origsrc/lives-1.4.9/lives-plugins/weed-plugins/Makefile.am	2011-12-14 19:45:42.577675800 -0600
 +++ src/lives-1.4.9/lives-plugins/weed-plugins/Makefile.am	2011-12-14 20:37:42.019097600 -0600
 @@ -90,8 +90,8 @@ EXTRA_DIST=data icons
+ 
+ install-data-local:
+ 	mkdir -p "$(DESTDIR)$(fxpluginslibdir)"
+-	cp -rf data/ "$(DESTDIR)$(fxpluginslibdir)"
+-	cp -rf icons/ "$(DESTDIR)$(fxpluginslibdir)"
++	cp -rf $(srcdir)/data/ "$(DESTDIR)$(fxpluginslibdir)"
++	cp -rf $(srcdir)/icons/ "$(DESTDIR)$(fxpluginslibdir)"
+ 	$(MAKE) -i install-data-local-remove-vcs-files
+ 
+ install-data-local-remove-vcs-files:
+--- origsrc/lives-1.6.4/lives-plugins/weed-plugins/cairo/Makefile.am	2012-09-17 09:20:57.000000000 -0500
++++ src/lives-1.6.4/lives-plugins/weed-plugins/cairo/Makefile.am	2012-10-31 18:30:50.809314400 -0500
+@@ -51,8 +56,8 @@ EXTRA_DIST=data icons
  
  install-data-local:
  	mkdir -p "$(DESTDIR)$(fxpluginslibdir)"

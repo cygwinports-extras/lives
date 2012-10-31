@@ -1,0 +1,12 @@
+--- origsrc/lives-1.6.4/libweed/weed-effects.h	2012-09-17 09:21:12.000000000 -0500
++++ src/lives-1.6.4/libweed/weed-effects.h	2012-10-30 22:15:21.245684800 -0500
+@@ -126,7 +126,9 @@ extern "C"
+ #define WEED_ERROR_PLUGIN_INVALID 64
+ 
+   /* host bootstrap function */
++#ifndef HAS_LIVES_PLUGINS_H
+ typedef weed_plant_t *(*weed_bootstrap_f) (weed_default_getter_f *value, int num_versions, int *plugin_versions);
++#endif
+ 
+   /* plugin only functions */
+ typedef weed_plant_t *(*weed_setup_f)(weed_bootstrap_f weed_boot);

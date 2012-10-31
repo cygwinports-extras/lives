@@ -1,0 +1,211 @@
+--- origsrc/lives-1.6.4/configure.in	2012-10-30 20:08:23.641648200 -0500
++++ src/lives-1.6.4/configure.in	2012-10-30 20:15:33.122248800 -0500
+@@ -42,6 +42,7 @@ dnl AC_CONFIG_HEADERS(config.h)
+ 
+ ACX_PTHREAD(PTHREAD_OK=true,PTHREAD_OK=false)
+ 
++IS_CYGWIN="false"
+ IS_DARWIN="false"
+ IS_IRIX="false"
+ IS_SOLARIS="false"
+@@ -49,6 +50,9 @@ IS_LINUX_GNU="false"
+ IS_MINGW="false"
+ 
+ case "{$target_os}" in
++ *cygwin*)
++   IS_CYGWIN="true"
++  ;;
+  *darwin*)
+    IS_DARWIN="true"
+   ;;
+@@ -68,6 +72,7 @@ case "{$target_os}" in
+   ;;
+ esac
+ 
++AM_CONDITIONAL(IS_CYGWIN,$IS_CYGWIN)
+ AM_CONDITIONAL(IS_DARWIN,$IS_DARWIN)
+ AM_CONDITIONAL(IS_IRIX,$IS_IRIX)
+ AM_CONDITIONAL(IS_LINUX_GNU,$IS_LINUX_GNU)
+--- origsrc/lives-1.6.4/lives-plugins/plugins/decoders/Makefile.am	2012-09-17 09:20:55.000000000 -0500
++++ src/lives-1.6.4/lives-plugins/plugins/decoders/Makefile.am	2012-10-30 20:45:12.356066700 -0500
+@@ -15,6 +15,12 @@ shared_cflags =  -fPIC -DPIC
+ endif
+ 
+ 
++if IS_CYGWIN
++shared_cflags =  -DIS_CYGWIN
++shared_ldflags += -no-undefined
++endif
++
++
+ if IS_MINGW
+ shared_cflags =  -DIS_MINGW -I /usr/include/ffmpeg -I /usr/i686-pc-mingw32/sys-root/mingw/include
+ shared_ldflags += -no-undefined -Wl,/home/gabriel/lives-wine-test/ffmpeg/avcodec-54.dll -Wl,/home/gabriel/lives-wine-test/ffmpeg/avformat-54.dll -Wl,/home/gabriel/lives-wine-test/ffmpeg/avutil-51.dll
+--- origsrc/lives-1.6.4/lives-plugins/plugins/decoders/decplugin.h	2012-09-17 09:20:55.000000000 -0500
++++ src/lives-1.6.4/lives-plugins/plugins/decoders/decplugin.h	2012-10-30 20:16:51.270048300 -0500
+@@ -22,7 +22,7 @@ extern "C"
+ #include "../../../libweed/weed-palettes.h"
+ #endif
+ 
+-#ifdef IS_DARWIN
++#if defined(IS_DARWIN) || defined(IS_CYGWIN)
+ #ifndef lseek64
+ #define lseek64 lseek
+ #endif
+--- origsrc/lives-1.6.4/lives-plugins/plugins/playback/video/Makefile.am	2012-09-17 09:20:53.000000000 -0500
++++ src/lives-1.6.4/lives-plugins/plugins/playback/video/Makefile.am	2012-10-30 20:46:11.891582900 -0500
+@@ -18,6 +18,11 @@ if IS_IRIX
+ shared_cflags +=-DIS_IRIX=1
+ endif
+ 
++if IS_CYGWIN
++shared_cflags =  -DIS_CYGWIN
++shared_ldflags += -no-undefined                     
++endif
++
+ if IS_MINGW
+ shared_cflags += -DIS_MINGW=1
+ shared_ldflags += -no-undefined -Wl,/usr/i686-pc-mingw32/sys-root/mingw/lib/libSDL.dll.a -Wl,/usr/i686-pc-mingw32/sys-root/mingw/lib/libSDLmain.a -mwindows -Wl,/usr/i686-pc-mingw32/sys-root/mingw/lib/libmingw32.a
+--- origsrc/lives-1.6.4/lives-plugins/weed-plugins/Makefile.am	2012-10-30 20:31:24.946021200 -0500
++++ src/lives-1.6.4/lives-plugins/weed-plugins/Makefile.am	2012-10-31 18:24:36.488797800 -0500
+@@ -18,6 +18,12 @@ shared_cflags = -fPIC -DPIC
+ endif
+ 
+ 
++if IS_CYGWIN
++shared_cflags =  -DIS_CYGWIN
++shared_ldflags += -no-undefined                     
++endif
++
++
+ if HAVE_SYSTEM_WEED
+ AM_LDFLAGS = $(shared_ldflags) @WEED_UTILS_LIBS@ 
+ weed_CFLAGS = -DHAVE_SYSTEM_WEED
+@@ -25,7 +31,7 @@ else
+ if IS_MINGW
+ AM_LDFLAGS = $(shared_ldflags) -no-undefined -Wl,../../libweed/.libs/libweed-utils.a
+ else
+-AM_LDFLAGS = $(shared_ldflags) ../../libweed/.libs/libweed-utils.la
++AM_LDFLAGS = $(shared_ldflags) ../../libweed/libweed-utils.la
+ endif
+ weed_CFLAGS =
+ endif
+@@ -68,7 +74,7 @@ endif
+ 
+ if HAVE_OPENCV
+ farneback_analyser_libs = farneback_analyser.la
+-farneback_analyser_la_LDFLAGS = $(AM_LDFLAGS) $(OPENCV_LIBS_ONLY_L) -lopencv_core -lopencv_video
++farneback_analyser_la_LDFLAGS = $(AM_LDFLAGS) $(OPENCV_LIBS_ONLY_L) -lopencv_core -lopencv_video -lopencv_imgproc
+ farneback_analyser_la_CFLAGS = $(AM_CFLAGS)
+ farneback_analyser_la_SOURCES = farneback_analyser.cpp
+ 
+--- origsrc/lives-1.6.4/lives-plugins/weed-plugins/cairo/Makefile.am	2012-09-17 09:20:57.000000000 -0500
++++ src/lives-1.6.4/lives-plugins/weed-plugins/cairo/Makefile.am	2012-10-31 18:30:50.809314400 -0500
+@@ -13,6 +13,11 @@ shared_cflags = -fPIC -DPIC
+ endif
+ 
+ 
++if IS_CYGWIN
++shared_cflags =  -DIS_CYGWIN
++shared_ldflags += -no-undefined                     
++endif
++
+ 
+ if HAVE_SYSTEM_WEED
+ AM_LDFLAGS = $(shared_ldflags) @GTK_LIBS@ @WEED_UTILS_LIBS@ 
+@@ -21,7 +26,7 @@ else
+ if IS_MINGW
+ AM_LDFLAGS = $(shared_ldflags) @GTK_LIBS@ -no-undefined -D IS_MINGW=1 -Wl,../../../libweed/.libs/libweed-utils.a
+ else
+-AM_LDFLAGS = $(shared_ldflags) @GTK_LIBS@ ../../../libweed/.libs/libweed-utils.la
++AM_LDFLAGS = $(shared_ldflags) @GTK_LIBS@ ../../../libweed/libweed-utils.la
+ endif
+ weed_CFLAGS =
+ endif
+--- origsrc/lives-1.6.4/lives-plugins/weed-plugins/gdk/Makefile.am	2012-10-30 20:31:24.946021200 -0500
++++ src/lives-1.6.4/lives-plugins/weed-plugins/gdk/Makefile.am	2012-10-31 18:12:45.809407800 -0500
+@@ -13,6 +13,11 @@ shared_cflags = -fPIC -DPIC
+ endif
+ 
+ 
++if IS_CYGWIN
++shared_cflags =  -DIS_CYGWIN
++shared_ldflags += -no-undefined                     
++endif
++
+ 
+ if HAVE_SYSTEM_WEED
+ AM_LDFLAGS = $(shared_ldflags) @GTK_LIBS@ @WEED_UTILS_LIBS@ 
+@@ -21,7 +26,7 @@ else
+ if IS_MINGW
+ AM_LDFLAGS = $(shared_ldflags) @GTK_LIBS@ -no-undefined -D IS_MINGW=1 -Wl,../../../libweed/.libs/libweed-utils.a
+ else
+-AM_LDFLAGS = $(shared_ldflags) @GTK_LIBS@ ../../../libweed/.libs/libweed-utils.la
++AM_LDFLAGS = $(shared_ldflags) @GTK_LIBS@ ../../../libweed/libweed-utils.la
+ endif
+ weed_CFLAGS =
+ endif
+--- origsrc/lives-1.6.4/src/Makefile.am	2012-10-30 20:08:23.759163100 -0500
++++ src/lives-1.6.4/src/Makefile.am	2012-10-30 20:16:29.256819200 -0500
+@@ -6,6 +6,10 @@ if ENABLE_OSC
+ osc_INCLUDES=-I "$(top_srcdir)/libOSC"
+ endif
+ 
++if IS_CYGWIN
++cygwin_CFLAGS=-DIS_CYGWIN=1
++endif
++
+ if IS_DARWIN
+ darwin_INCLUDES=-I /sw/include
+ darwin_CFLAGS=-DIS_DARWIN=1
+@@ -215,7 +219,7 @@ lives_exe_LDADD = @X11_LIBS@ @MJPEGTOOLS
+ 
+ AM_CFLAGS = -Wstrict-aliasing=0 $(yuv4mpeg_CFLAGS) $(ldvgrab_CFLAGS) $(dvgrab_CFLAGS) \
+ 	$(oil_CFLAGS) \
+-	$(darwin_CFLAGS) $(irix_CFLAGS) $(linux_CFLAGS) $(solaris_CFLAGS) $(osc_CFLAGS) $(mingw_CFLAGS) $(alsa_CFLAGS) $(png_CFLAGS) $(swscale_CFLAGS) \
++	$(cygwin_CFLAGS) $(darwin_CFLAGS) $(irix_CFLAGS) $(linux_CFLAGS) $(solaris_CFLAGS) $(osc_CFLAGS) $(mingw_CFLAGS) $(alsa_CFLAGS) $(png_CFLAGS) $(swscale_CFLAGS) \
+ 	$(jack_CFLAGS) $(pulse_CFLAGS) $(giw_CFLAGS) $(unicap_CFLAGS) $(libweed_CFLAGS) $(libweed_compat_CFLAGS) \
+ 	-DLIVES_LIBDIR=\""$(libdir)"\" $(gtk_def)
+ 
+--- origsrc/lives-1.6.4/src/effects-weed.c	2012-10-17 21:03:33.000000000 -0500
++++ src/lives-1.6.4/src/effects-weed.c	2012-10-30 20:14:11.540051500 -0500
+@@ -4271,7 +4271,7 @@ void weed_load_all (void) {
+     for (plugin_idx=0;plugin_idx<listlen;plugin_idx++) {
+       threaded_dialog_spin();
+       plugin_name=(gchar *)g_list_nth_data(weed_plugin_list,plugin_idx);
+-#ifndef IS_MINGW
++#if !defined(IS_MINGW) && !defined(IS_CYGWIN)
+       if (!strncmp(plugin_name+strlen(plugin_name)-3,".so",3))
+ #else
+ 	if (!strncmp(plugin_name+strlen(plugin_name)-4,".dll",4))
+--- origsrc/lives-1.6.4/src/main.h	2012-09-19 22:47:38.000000000 -0500
++++ src/lives-1.6.4/src/main.h	2012-10-30 20:16:51.291049700 -0500
+@@ -167,7 +167,7 @@ typedef int lives_pgid_t;
+ #define LIVES_FEATURE_URL "http://sourceforge.net/tracker/?group_id=64341&atid=507142"
+ #define LIVES_TRANSLATE_URL "https://translations.launchpad.net/lives/trunk"
+ 
+-#ifdef IS_DARWIN
++#if defined(IS_DARWIN) || defined(IS_CYGWIN)
+ #ifndef off64_t
+ #define off64_t off_t
+ #endif
+--- origsrc/lives-1.6.4/src/plugins.c	2012-09-17 09:22:54.000000000 -0500
++++ src/lives-1.6.4/src/plugins.c	2012-10-30 20:14:19.001190100 -0500
+@@ -1210,7 +1210,7 @@ _vid_playback_plugin *open_vid_playback_
+   // TODO - if in_use, get fixed_fps,fwidth,fheight,palette,argc and argv from a file
+   // TODO - dirsep
+ 
+-#ifndef IS_MINGW
++#if !defined(IS_MINGW) && !defined(IS_CYGWIN)
+   gchar *plugname=g_strdup_printf ("%s%s%s/%s.so",prefs->lib_dir,PLUGIN_EXEC_DIR,PLUGIN_VID_PLAYBACK,name);
+ #else
+   gchar *plugname=g_strdup_printf ("%s%s%s/%s.dll",prefs->lib_dir,PLUGIN_EXEC_DIR,PLUGIN_VID_PLAYBACK,name);
+@@ -2406,7 +2406,7 @@ lives_decoder_sys_t *open_decoder_plugin
+ 
+   dplug->name=NULL;
+ 
+-#ifndef IS_MINGW
++#if !defined(IS_MINGW) && !defined(IS_CYGWIN)
+   plugname=g_strdup_printf ("%s%s%s/%s.so",prefs->lib_dir,PLUGIN_EXEC_DIR,PLUGIN_DECODERS,plname);
+ #else
+   plugname=g_strdup_printf ("%s%s%s/%s.dll",prefs->lib_dir,PLUGIN_EXEC_DIR,PLUGIN_DECODERS,plname);
