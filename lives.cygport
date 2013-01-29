@@ -1,5 +1,5 @@
 NAME="lives"
-VERSION=1.6.4
+VERSION=1.8.2
 RELEASE=1
 CATEGORY="Video"
 SUMMARY="Video Editing System"
@@ -19,8 +19,9 @@ PATCH_URI="
 	1.6.4-redecl-error.patch
 "
 
-REQUIRES="cdrkit ImageMagick mjpegtools mplayer perl python sox transcode"
+REQUIRES="cdrkit ImageMagick mjpegtools mplayer sox transcode"
 
+CPPFLAGS+=" -DIS_CYGWIN"
 CYGCONF_ARGS="--disable-liboil --disable-doxygen"
 
 KEEP_LA_FILES="none"
