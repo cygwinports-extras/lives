@@ -1,6 +1,6 @@
 NAME="lives"
 VERSION=1.8.2
-RELEASE=1
+RELEASE=2
 CATEGORY="Video"
 SUMMARY="Video Editing System"
 DESCRIPTION="LiVES mixes realtime video performance and non-linear editing in
